@@ -1,0 +1,23 @@
+{
+  "name": "deleite-backend",
+  "version": "0.0.1",
+  "description": "Backend for Deleite, a bakery, and its build using Hexagonal Architecture",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Christian Alexander Vázquez González",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "^34.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "typescript": "*"
+  },
+  "dependencies": {
+    "mongoose": "^6.9.0"
+  }
+}
