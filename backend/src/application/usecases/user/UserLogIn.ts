@@ -1,9 +1,11 @@
 import User from "../../../domain/entities/user";
+import PasswordsNotMatchError from "../../../domain/exceptions/PasswordsNotMatchError";
+import UserNotFoundError from "../../../domain/exceptions/UserNotFoundError";
 import GenerateToken from "../authentication/GenerateToken";
 import ComparePassword from "../encryption/passwordEncryption/ComparePassword";
 import GetUserByUserName from "./GetUserByUserName";
 
-class LogIn {
+class UserLogIn {
     private readonly getUserByUserName: GetUserByUserName;
     private readonly comparePassword: ComparePassword;
     private readonly generateToken: GenerateToken;
@@ -26,11 +28,11 @@ class LogIn {
                 return token;
             }
 
-            throw new Error("Las contraseñas no coinciden");
+            throw new PasswordsNotMatchError();
         }
 
-        throw new Error("El usuario no existe");
+        throw new UserNotFoundError();
     }
 }
 
-export default LogIn;
+export default UserLogIn;

@@ -1,4 +1,5 @@
 import User from "../../../domain/entities/user";
+import UserNotFoundError from "../../../domain/exceptions/UserNotFoundError";
 import IUserRepo from "../../../domain/repositories/IUserRepo";
 import GetUserById from "./GetUserById";
 
@@ -11,8 +12,8 @@ class UpdateUser {
         this.getUserById = new GetUserById(userRepo);
     }
 
-    async run(user: User): Promise<User | null> {
-        const foundUser: User | null = await this.getUserById.run(user.uuid ?? "");
+    async run(id: string, user: User): Promise<User> {
+        const foundUser: User | null = await this.getUserById.run(id ?? "");
 
         if (foundUser) {
             const userToUpdate: User = {
@@ -31,10 +32,10 @@ class UpdateUser {
 
             const updatedUser: User | null = await this.userRepo.update(userToUpdate);
 
-            return updatedUser;
+            if (updatedUser) return updatedUser;
         }
 
-        return null;
+        throw new UserNotFoundError();
     }
 }
 

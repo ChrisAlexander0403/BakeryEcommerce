@@ -1,4 +1,5 @@
 import User from "../../../domain/entities/user";
+import UserNotFoundError from "../../../domain/exceptions/UserNotFoundError";
 import IUserRepo from "../../../domain/repositories/IUserRepo";
 
 class DeleteUser {
@@ -8,14 +9,15 @@ class DeleteUser {
         this.userRepo = userRepo;
     }
 
-    async run(id: string): Promise<User | null> {
+    async run(id: string): Promise<User> {
         const foundUser: User | null = await this.userRepo.getById(id);
 
         if(foundUser) {
-            await this.userRepo.delete(foundUser);
+            const deletedUser = await this.userRepo.delete(foundUser);
+            if(deletedUser) return deletedUser;
         }
 
-        return foundUser;
+        throw new UserNotFoundError();
     }
 }
 
