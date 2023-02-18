@@ -2,6 +2,7 @@ import express from 'express';
 import * as http from 'http';
 import cors from 'cors';
 import helmet from 'helmet';
+import router from './routes';
 // import router from './routes';
 // import swaggerUI from 'swagger-ui-express';
 // import docs from '../../../../docs';
@@ -18,7 +19,7 @@ class Server {
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(cors());
         this.app.use(helmet());
-        // this.app.use(router);
+        this.app.use("/api", router);
         // this.app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(docs));
     }
 

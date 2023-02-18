@@ -1,16 +1,15 @@
 import IAuthenticationRepo from "../../../domain/repositories/authentication/IAuthenticationRepo";
 
-class GenerateToken {
+class AuthenticateUser {
     private readonly authenticationRepo: IAuthenticationRepo;
 
     constructor(authenticationRepo: IAuthenticationRepo) {
         this.authenticationRepo = authenticationRepo;
     }
 
-    run(data: any): string {
-        const token = this.authenticationRepo.generateToken(data);
-        return token;
+    run(token: string): void {
+        // this.authenticationRepo.validateToken(token, );
     }
 }
 
-export default GenerateToken;
+export default AuthenticateUser;

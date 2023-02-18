@@ -1,5 +1,5 @@
 import User from "../../../domain/entities/user";
-import UserNotFoundError from "../../../domain/exceptions/UserNotFoundError";
+import UserNotFoundError from "../../../domain/exceptions/user/UserNotFoundError";
 import IUserRepo from "../../../domain/repositories/IUserRepo";
 
 class DeleteUser {

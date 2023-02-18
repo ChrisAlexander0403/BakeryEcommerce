@@ -8,8 +8,11 @@ class GetUserByUserName {
         this.userRepo = userRepo;
     }
 
-    async run(userName: string): Promise<User | null> {
+    async run(userName: string): Promise<User> {
         const foundUser: User | null = await this.userRepo.getByUserName(userName);
+
+        if(!foundUser) throw new Error("Error");
+
         return foundUser;
     }
 }
