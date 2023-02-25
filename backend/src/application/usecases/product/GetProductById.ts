@@ -1,4 +1,5 @@
 import Product from "../../../domain/entities/product";
+import ProductNotFoundError from "../../../domain/exceptions/product/ProductNotFoundError";
 import IProductRepo from "../../../domain/repositories/IProductRepo";
 
 class GetProductById {
@@ -11,7 +12,7 @@ class GetProductById {
     async run(id: string): Promise<Product | null> {
         const foundProduct: Product | null = await this.productRepo.getById(id);
 
-        if(!foundProduct) throw new Error("Error");
+        if(!foundProduct) throw new ProductNotFoundError();
 
         return foundProduct;
     }

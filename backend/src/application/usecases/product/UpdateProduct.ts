@@ -1,4 +1,5 @@
 import Product from "../../../domain/entities/product";
+import ProductNotFoundError from "../../../domain/exceptions/product/ProductNotFoundError";
 import IProductRepo from "../../../domain/repositories/IProductRepo";
 import GetProductById from "./GetProductById";
 
@@ -11,8 +12,8 @@ class UpdateProduct {
         this.getProductById = new GetProductById(productRepo);
     }
 
-    async run(product: Product): Promise<Product | null> {
-        const foundProduct: Product | null = await this.getProductById.run(product.uuid ?? "");
+    async run(id: string, product: Product): Promise<Product> {
+        const foundProduct: Product | null = await this.getProductById.run(id);
 
         if (foundProduct) {
             const productToUpdate: Product = {
@@ -26,10 +27,10 @@ class UpdateProduct {
 
             const updatedProduct: Product | null = await this.productRepo.update(productToUpdate);
 
-            return updatedProduct;
+            if (updatedProduct) return updatedProduct;
         }
 
-        return null;
+        throw new ProductNotFoundError();
     }
 }
 

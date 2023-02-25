@@ -1,4 +1,5 @@
 import Product from "../../../domain/entities/product";
+import ProductNotFoundError from "../../../domain/exceptions/product/ProductNotFoundError";
 import IProductRepo from "../../../domain/repositories/IProductRepo";
 
 
@@ -9,14 +10,16 @@ class DeleteProduct {
         this.productRepo = productRepo;
     }
 
-    async run(id: string): Promise<Product | null> {
+    async run(id: string): Promise<Product> {
         const foundProduct: Product | null = await this.productRepo.getById(id);
 
         if(foundProduct) {
-            await this.productRepo.delete(foundProduct);
+            const deletedProduct = await this.productRepo.delete(foundProduct);
+
+            if(deletedProduct) return deletedProduct;
         }
 
-        return foundProduct;
+        throw new ProductNotFoundError();
     }
 }
 

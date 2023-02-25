@@ -40,7 +40,11 @@ class UserRepo implements IUserRepo {
     }
 
     async delete(user: User): Promise<User | null> {
-        const deletedUser = await userModel.findOneAndDelete({ userName: user.userName }, { new: true }).lean();
+        const deletedUser = await userModel.findOneAndUpdate({ userName: user.userName },{
+            $set: {
+                status: "DELETED"
+            }
+        }, { new: true }).lean();
         return deletedUser;
     }
 }

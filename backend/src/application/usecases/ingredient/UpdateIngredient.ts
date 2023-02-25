@@ -1,33 +1,29 @@
 import Ingredient from "../../../domain/entities/ingredient";
+import IngredientNotFoundError from "../../../domain/exceptions/ingredient/IngredientNotFoundError";
 import IIngredientRepo from "../../../domain/repositories/IIngredientRepo";
-import GetIngredientById from "./GetIngredientById";
 
 class UpdateIngredient {
     private readonly ingredientRepo: IIngredientRepo;
-    private readonly getIngredientById: GetIngredientById;
 
     constructor(ingredientRepo: IIngredientRepo) {
         this.ingredientRepo = ingredientRepo;
-        this.getIngredientById = new GetIngredientById(ingredientRepo);
     }
 
-    async run(ingredient: Ingredient): Promise<Ingredient | null> {
-        const foundIngredient: Ingredient | null = await this.getIngredientById.run(ingredient.uuid ?? "");
+    async run(id: string, ingredient: Ingredient): Promise<Ingredient> {
+        const foundIngredient: Ingredient | null = await this.ingredientRepo.getById(id);
 
         if (foundIngredient) {
             const ingredientToUpdate: Ingredient = {
                 ...foundIngredient,
-                name: ingredient.name ?? foundIngredient.name,
-                unitOfMeasure: ingredient.unitOfMeasure ?? foundIngredient.unitOfMeasure,
-                cost: ingredient.cost ?? foundIngredient.cost
+                ...ingredient
             }
 
             const updatedIngredient: Ingredient | null = await this.ingredientRepo.update(ingredientToUpdate);
 
-            return updatedIngredient;
+            if (updatedIngredient) return updatedIngredient;
         }
 
-        return null;
+        throw new IngredientNotFoundError();
     }
 }
 

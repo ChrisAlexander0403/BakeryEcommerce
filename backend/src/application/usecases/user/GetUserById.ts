@@ -9,7 +9,7 @@ class GetUserById {
         this.userRepo = userRepo;
     }
 
-    async run(id: string): Promise<User | null> {
+    async run(id: string): Promise<User> {
         const foundUser: User | null = await this.userRepo.getById(id);
 
         if(!foundUser) throw new UserNotFoundError();

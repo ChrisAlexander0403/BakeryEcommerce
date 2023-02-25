@@ -17,6 +17,11 @@ const ingredientSchema = new Schema({
     cost: {
         type: Number,
         required: true
+    },
+    status: {
+        type: String,
+        required: true,
+        default: "ACTIVE"
     }
 }, {
     timestamps: true

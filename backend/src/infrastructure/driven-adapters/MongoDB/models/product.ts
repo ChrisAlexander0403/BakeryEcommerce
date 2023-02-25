@@ -24,7 +24,13 @@ const productSchema = new Schema({
     },
     inStock: {
         type: Number,
-        requierd: true
+        requierd: true,
+        default: 0
+    },
+    status: {
+        type: String,
+        required: true,
+        default: "ACTIVE"
     }
 }, {
     timestamps: true

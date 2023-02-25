@@ -35,7 +35,7 @@ class UserController {
 
     getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const users = await this.getAllUsersUseCase.run();
+            const users: User[] = await this.getAllUsersUseCase.run();
             res.status(200).json({ users });
             return;
         } catch(err) {

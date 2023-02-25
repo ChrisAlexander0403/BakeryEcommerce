@@ -2,7 +2,7 @@ import Ingredient from "../entities/ingredient";
 
 
 interface IIngredientRepo {
-    getAll(): Promise<Ingredient[]>;
+    getAll(findArgs?: any): Promise<Ingredient[]>;
     getById(id: string): Promise<Ingredient | null>;
     create(ingredient: Ingredient): Promise<Ingredient>;
     update(ingredient: Ingredient): Promise<Ingredient | null>;

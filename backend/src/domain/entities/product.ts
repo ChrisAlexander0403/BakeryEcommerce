@@ -5,8 +5,9 @@ interface Product {
     description?: string;
     cost?: number;
     inStock?: number;
-    createdAt?: string;
-    updatedAt?: string;
+    status?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 export default Product;

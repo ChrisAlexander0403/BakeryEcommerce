@@ -9,7 +9,8 @@ class GetAllProviders {
     }
 
     async run(): Promise<Provider[]> {
-        const providers: Provider[] = await this.providerRepo.getAll();
+        let providers: Provider[] = await this.providerRepo.getAll();
+        providers = providers.filter(p => p.status !== "DELETED");
         return providers;
     }
 }

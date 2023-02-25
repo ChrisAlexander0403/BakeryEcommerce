@@ -17,6 +17,11 @@ const saleSchema = new Schema({
     date: {
         type: String,
         required: true
+    },
+    status: {
+        type: String,
+        required: true,
+        default: "ACTIVE"
     }
 }, {
     timestamps: true

@@ -5,9 +5,12 @@ interface Ingredient {
 
 interface Recipe {
     uuid?: string;
+    name?: string;
     ingredients?: Ingredient[];
-    createdAt?: string;
-    updatedAt?: string;
+    instruction?: string;
+    status?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 export default Recipe;

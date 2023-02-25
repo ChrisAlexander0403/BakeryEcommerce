@@ -9,7 +9,8 @@ class GetAllRecipes {
     }
 
     async run(): Promise<Recipe[]> {
-        const recipes: Recipe[] = await this.recipeRepo.getAll();
+        let recipes: Recipe[] = await this.recipeRepo.getAll();
+        recipes = recipes.filter(r => r.status !== "DELETED");
         return recipes;
     }
 }

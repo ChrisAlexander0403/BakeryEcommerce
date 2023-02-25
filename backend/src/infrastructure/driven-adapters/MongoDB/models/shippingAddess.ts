@@ -19,7 +19,12 @@ const shippingAddressSchema = new Schema({
         required: true
     },
     internalNumber: String,
-    phone: String
+    phone: String,
+    status: {
+        type: String,
+        required: true,
+        default: "ACTIVE"
+    }
 },{
     timestamps: true
 });

@@ -9,7 +9,8 @@ class GetAllProducts {
     }
 
     async run(): Promise<Product[]> {
-        const products: Product[] = await this.productRepo.getAll();
+        let products: Product[] = await this.productRepo.getAll();
+        products = products.filter(p => p.status !== "DELETED");
         return products;
     }
 }

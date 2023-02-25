@@ -9,7 +9,8 @@ class GetAllInventories {
     }
 
     async run(): Promise<Inventory[]> {
-        const inventories: Inventory[] = await this.inventoryRepo.getAll();
+        let inventories: Inventory[] = await this.inventoryRepo.getAll();
+        inventories = inventories.filter(i => i.status !== "DELETED");
         return inventories;
     }
 }

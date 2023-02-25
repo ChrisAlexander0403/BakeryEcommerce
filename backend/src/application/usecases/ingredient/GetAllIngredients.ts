@@ -10,7 +10,8 @@ class GetAllIngredients {
     }
 
     async run(): Promise<Ingredient[]> {
-        const ingredients: Ingredient[] = await this.ingredientRepo.getAll();
+        let ingredients: Ingredient[] = await this.ingredientRepo.getAll();
+        ingredients = ingredients.filter(i => i.status !== "DELETED");
         return ingredients;
     }
 }

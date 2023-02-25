@@ -9,7 +9,8 @@ class GetAllUsers {
     }
 
     async run(): Promise<User[]> {
-        const users: User[] = await this.userRepo.getAll();
+        let users: User[] = await this.userRepo.getAll();
+        users = users.filter(u => u.status !== "DELETED");
         return users;
     }
 }

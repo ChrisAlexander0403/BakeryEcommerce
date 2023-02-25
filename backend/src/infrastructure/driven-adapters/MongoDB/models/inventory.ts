@@ -19,7 +19,12 @@ const inventorySchema = new Schema({
             type: Number,
             required: true
         }
-    }]
+    }],
+    status: {
+        type: String,
+        required: true,
+        default: "ACTIVE"
+    }
 },{
     timestamps: true,
 });

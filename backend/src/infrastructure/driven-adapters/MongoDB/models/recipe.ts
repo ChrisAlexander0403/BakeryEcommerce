@@ -6,6 +6,10 @@ const recipeSchema = new Schema({
         required: true,
         unique: true
     },
+    name: {
+        type: String,
+        required: true
+    },
     ingredients: [{
         ingredient: {
             type: String,
@@ -15,7 +19,16 @@ const recipeSchema = new Schema({
             type: Number,
             required: true
         }
-    }]
+    }],
+    instructions: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: String,
+        required: true,
+        default: "ACTIVE"
+    }
 }, {
     timestamps: true
 });

@@ -1,4 +1,5 @@
 import Ingredient from "../../../domain/entities/ingredient";
+import IngredientNotFoundError from "../../../domain/exceptions/ingredient/IngredientNotFoundError";
 import IIngredientRepo from "../../../domain/repositories/IIngredientRepo";
 
 class DeleteIngredient {
@@ -8,14 +9,15 @@ class DeleteIngredient {
         this.ingredientRepo = ingredientRepo;
     }
 
-    async run(id: string): Promise<Ingredient | null> {
+    async run(id: string): Promise<Ingredient> {
         const foundIngredient: Ingredient | null = await this.ingredientRepo.getById(id);
 
         if(foundIngredient) {
-            return await this.ingredientRepo.delete(foundIngredient);
+            const deletedIngredient = await this.ingredientRepo.delete(foundIngredient);
+            if (deletedIngredient) return deletedIngredient;
         }
 
-        return null;
+        throw new IngredientNotFoundError;
     }
 }
 

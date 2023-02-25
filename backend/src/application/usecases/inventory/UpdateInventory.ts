@@ -1,4 +1,5 @@
 import Inventory from "../../../domain/entities/inventory";
+import InventoryNotFoundError from "../../../domain/exceptions/inventory/InventoryNotFoundError";
 import IInventoryRepo from "../../../domain/repositories/IInventoryRepo";
 import GetInventoryById from "./GetInventoryById";
 
@@ -11,8 +12,8 @@ class UpdateInventory {
         this.getInventoryById = new GetInventoryById(inventoryRepo);
     }
 
-    async run(inventory: Inventory): Promise<Inventory | null> {
-        const foundInventory: Inventory | null = await this.getInventoryById.run(inventory.uuid ?? "");
+    async run(id: string, inventory: Inventory): Promise<Inventory> {
+        const foundInventory: Inventory | null = await this.getInventoryById.run(id);
 
         if (foundInventory) {
             const inventoryToUpdate: Inventory = {
@@ -23,10 +24,10 @@ class UpdateInventory {
 
             const updatedInventory: Inventory | null = await this.inventoryRepo.update(inventoryToUpdate);
 
-            return updatedInventory;
+            if (updatedInventory) return updatedInventory;
         }
 
-        return null;
+        throw new InventoryNotFoundError();
     }
 }
 

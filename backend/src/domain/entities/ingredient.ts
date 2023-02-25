@@ -2,9 +2,10 @@ interface Ingredient {
     uuid?: string;
     name?: string;
     unitOfMeasure?: string;
-    cost?: string;
-    createdAt?: string;
-    updatedAt?: string;
+    cost?: number;
+    status?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 };
 
 export default Ingredient;

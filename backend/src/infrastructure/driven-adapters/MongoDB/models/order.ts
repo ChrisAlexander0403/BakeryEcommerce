@@ -28,6 +28,11 @@ const orderSchema = new Schema({
     deliveryDate: {
         type: String,
         required: true
+    },
+    status: {
+        type: String,
+        required: true,
+        default: "ACTIVE"
     }
 }, {
     timestamps: true

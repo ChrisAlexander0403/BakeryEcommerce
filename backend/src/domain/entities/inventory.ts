@@ -1,11 +1,15 @@
-import Ingredient from "./ingredient";
+interface Ingredient {
+    ingredient?: string,
+    inStock?: number
+}
 
 interface Inventory {
     uuid?: string;
     name?: string;
     ingredients?: Ingredient[];
-    createdAt?: string;
-    updatedAt?: string;
+    status?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 export default Inventory;

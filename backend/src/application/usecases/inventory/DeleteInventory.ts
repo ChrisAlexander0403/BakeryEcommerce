@@ -1,4 +1,5 @@
 import Inventory from "../../../domain/entities/inventory";
+import InventoryNotFoundError from "../../../domain/exceptions/inventory/InventoryNotFoundError";
 import IInventoryRepo from "../../../domain/repositories/IInventoryRepo";
 
 class DeleteInventory {
@@ -8,14 +9,15 @@ class DeleteInventory {
         this.inventoryRepo = inventoryRepo;
     }
 
-    async run(id: string): Promise<Inventory | null> {
+    async run(id: string): Promise<Inventory> {
         const foundInventory: Inventory | null = await this.inventoryRepo.getById(id);
 
         if(foundInventory) {
-            await this.inventoryRepo.delete(foundInventory);
+            const deletedInventory = await this.inventoryRepo.delete(foundInventory);
+            if (deletedInventory) return deletedInventory;
         }
 
-        return foundInventory;
+        throw new InventoryNotFoundError();
     }
 }
 
