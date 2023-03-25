@@ -16,7 +16,7 @@ class UserController {
     private readonly updateUserUseCase: UpdateUser;
     private readonly deleteUserUseCase: DeleteUser;
     private readonly userLoginUseCase: UserLogin;
-    
+
     constructor(
         getAllUsersUseCase: GetAllUsers,
         createUserUseCase: CreateUser,
@@ -36,19 +36,21 @@ class UserController {
     getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const users: User[] = await this.getAllUsersUseCase.run();
-            res.status(200).json({ users });
+            res.status(200).json(users);
             return;
-        } catch(err) {
+        } catch (err) {
             next(err);
         }
     }
 
     createUser = async (req: Request, res: Response, next: NextFunction) => {
         const user: User = req.body;
+        if (req.files) user.profilePicture = req.files.profilePicture;
+
         try {
             user.uuid = uuid();
             const createdUser = await this.createUserUseCase.run(user);
-            res.status(201).json({ createdUser });
+            res.status(201).json(createdUser);
             return;
         } catch(err) {
             next(err);
@@ -59,7 +61,7 @@ class UserController {
         const { id } = req.params;
         try {
             const foundUser: User | null = await this.getUserByIdUseCase.run(id);
-            res.status(200).json({ foundUser });
+            res.status(200).json(foundUser);
             return;
         } catch (err) {
             next(err);
@@ -69,12 +71,12 @@ class UserController {
     updateUser = async (req: Request, res: Response, next: NextFunction) => {
         const { id } = req.params;
         const user: User = req.body;
-        
+
         try {
             const updatedUser: User = await this.updateUserUseCase.run(id, user);
-            res.status(200).json({ updatedUser });
+            res.status(200).json(updatedUser);
             return;
-        } catch(err) {
+        } catch (err) {
             next(err);
         }
     }
@@ -83,9 +85,9 @@ class UserController {
         const { id } = req.params;
         try {
             const deletedUser: User = await this.deleteUserUseCase.run(id);
-            res.status(200).json({ deletedUser });
+            res.status(200).json(deletedUser);
             return;
-        } catch(err) {
+        } catch (err) {
             next(err);
         }
     }
@@ -95,13 +97,13 @@ class UserController {
         try {
             const tokens: Tokens = await this.userLoginUseCase.run(userName, password);
             res.status(200)
-                .json({ token: tokens.accessToken })
-                .cookie("jwt", tokens.refreshToken, {
-                    httpOnly: true,
-                    sameSite: 'none',
-                    secure: true,
-                    maxAge: 24*60*60*1000*7
-                });
+            .cookie("jwt", tokens.refreshToken, {
+                httpOnly: true,
+                sameSite: 'none',
+                secure: true,
+                maxAge: 24 * 60 * 60 * 1000 * 7
+            })
+            .json(tokens.accessToken);
             return;
         } catch (err) {
             next(err);

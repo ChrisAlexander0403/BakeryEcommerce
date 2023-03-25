@@ -10,6 +10,9 @@ import RecipeNotFoundError from "../../../../domain/exceptions/recipe/RecipeNotF
 import recipeRouter from "./recipe.routes";
 import ProductNotFoundError from "../../../../domain/exceptions/product/ProductNotFoundError";
 import productRouter from "./product.routes";
+import categoryRouter from "./category.routes";
+import CategoryNotFoundError from "../../../../domain/exceptions/category/CategoryNotFoundError";
+import CategoryAlreadyExistsError from "../../../../domain/exceptions/category/CategoryAlreadyExistsError";
 
 const router = Router();
 
@@ -18,6 +21,7 @@ router.use("/ingredients", ingredientRouter);
 router.use("/inventories", inventoryRouter);
 router.use("/recipes", recipeRouter);
 router.use("/products", productRouter);
+router.use("/categories", categoryRouter);
 
 router.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     //#region 
@@ -66,6 +70,22 @@ router.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     // Product Errors ---------------------------------
     else if (err instanceof ProductNotFoundError) {
         res.status(404).json({
+            message: err.message
+        });
+    }
+    //#endregion
+
+    //#region
+    // Category Errors ---------------------------------
+    else if (err instanceof CategoryNotFoundError) {
+        res.status(404).json({
+            name: err.name,
+            message: err.message
+        });
+    }
+    else if (err instanceof CategoryAlreadyExistsError) {
+        res.status(400).json({
+            name: err.name,
             message: err.message
         });
     }

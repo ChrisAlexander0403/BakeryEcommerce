@@ -3,8 +3,13 @@ interface Product {
     name?: string;
     recipe?: string;
     description?: string;
-    cost?: number;
+    size?: string;
+    category?: string;
+    price?: number;
+    images?: any;
+    tags: string[];
     inStock?: number;
+    views?: number;
     status?: string;
     createdAt?: Date;
     updatedAt?: Date;

@@ -1,9 +1,9 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import * as http from 'http';
 import cors from 'cors';
+import fileUpload from "express-fileupload";
 import helmet from 'helmet';
 import router from './routes';
-// import router from './routes';
 // import swaggerUI from 'swagger-ui-express';
 // import docs from '../../../../docs';
 
@@ -18,7 +18,9 @@ class Server {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(cors());
+        this.app.use(express.static("public"));
         this.app.use(helmet());
+        this.app.use(fileUpload());
         this.app.use("/api", router);
         // this.app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(docs));
     }
@@ -33,9 +35,9 @@ class Server {
 
     async stop(): Promise<void> {
         return await new Promise((resolve, reject) => {
-            if(this.httpServer != null) {
+            if (this.httpServer != null) {
                 this.httpServer.close(error => {
-                    if(error != null) {
+                    if (error != null) {
                         return reject(error);
                     }
                     return resolve();

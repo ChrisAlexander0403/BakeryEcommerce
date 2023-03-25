@@ -18,11 +18,7 @@ class UpdateProduct {
         if (foundProduct) {
             const productToUpdate: Product = {
                 ...foundProduct,
-                name: product.name ?? foundProduct.name,
-                recipe: product.recipe ?? foundProduct.recipe,
-                description: product.description ?? foundProduct.description,
-                cost: product.cost ?? foundProduct.cost,
-                inStock: product.inStock ?? foundProduct.inStock
+                ...product
             }
 
             const updatedProduct: Product | null = await this.productRepo.update(productToUpdate);

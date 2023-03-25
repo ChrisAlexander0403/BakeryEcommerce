@@ -3,22 +3,27 @@ import CreateProduct from "../../../../application/usecases/product/CreateProduc
 import DeleteProduct from "../../../../application/usecases/product/DeleteProduct";
 import GetAllProducts from "../../../../application/usecases/product/GetAllProducts";
 import GetProductById from "../../../../application/usecases/product/GetProductById";
+import IncreaseProductViews from "../../../../application/usecases/product/IncreaseProductViews";
 import UpdateProduct from "../../../../application/usecases/product/UpdateProduct";
+import FilesManagerRepo from "../../../implementations/FS/FilesManager";
 import ProductRepo from "../../../implementations/MongoDB/ProductRepo";
 import ProductController from "../controllers/product.controller";
 
 const productRepo = new ProductRepo();
+const filesManagerRepo = new FilesManagerRepo();
 const getAllProducts = new GetAllProducts(productRepo);
 const getProductById = new GetProductById(productRepo);
-const createProduct = new CreateProduct(productRepo);
+const createProduct = new CreateProduct(productRepo, filesManagerRepo);
 const updateProduct = new UpdateProduct(productRepo);
 const deleteProduct = new DeleteProduct(productRepo);
+const increateProductViews = new IncreaseProductViews(productRepo);
 const productController = new ProductController(
     createProduct,
     getProductById,
     getAllProducts,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    increateProductViews
 )
 
 const productRouter = Router();
@@ -30,5 +35,7 @@ productRouter.route('/:id')
     .get(productController.getProductById)
     .put(productController.updateProduct)
     .delete(productController.deleteProduct);
+productRouter.route('/increase-views/:id')
+    .put(productController.increaseProductViews)
 
 export default productRouter;

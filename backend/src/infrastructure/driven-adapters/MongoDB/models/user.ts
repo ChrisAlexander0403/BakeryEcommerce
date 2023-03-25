@@ -33,10 +33,6 @@ const customerSchema = new Schema({
         type: String,
         required: true
     },
-    publicKey: {
-        type: String,
-        required: true
-    },
     tokens: [String],
     status: {
         type: String,

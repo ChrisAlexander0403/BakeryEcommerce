@@ -31,7 +31,7 @@ class RecipeController {
     getAllRecipes = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const recipes: Recipe[] = await this.getAllRecipesUseCase.run();
-            res.status(200).json({ recipes });
+            res.status(200).json(recipes);
             return;
         } catch(err) {
             next(err);
@@ -42,7 +42,7 @@ class RecipeController {
         const { id } = req.params;
         try {
             const foundRecipe: Recipe | null = await this.getRecipeByIdUseCase.run(id);
-            res.status(200).json({ foundRecipe });
+            res.status(200).json(foundRecipe);
             return;
         } catch (err) {
             next(err);
@@ -54,7 +54,7 @@ class RecipeController {
         try {
             recipe.uuid = uuid();
             const createdRecipe = await this.createRecipeUseCase.run(recipe);
-            res.status(201).json({ createdRecipe });
+            res.status(201).json(createdRecipe);
             return;
         } catch(err) {
             next(err);
@@ -67,7 +67,7 @@ class RecipeController {
         
         try {
             const updatedRecipe: Recipe = await this.updateRecipeUseCase.run(id, recipe);
-            res.status(200).json({ updatedRecipe });
+            res.status(200).json(updatedRecipe);
             return;
         } catch(err) {
             next(err);
@@ -78,7 +78,7 @@ class RecipeController {
         const { id } = req.params;
         try {
             const deletedRecipe: Recipe = await this.deleteRecipeUseCase.run(id);
-            res.status(200).json({ deletedRecipe });
+            res.status(200).json(deletedRecipe);
             return;
         } catch(err) {
             next(err);

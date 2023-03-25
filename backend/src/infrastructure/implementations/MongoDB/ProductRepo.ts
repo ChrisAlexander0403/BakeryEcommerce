@@ -4,11 +4,11 @@ import productModel from "../../driven-adapters/MongoDB/models/product";
 
 class ProductRepo implements IProductRepo {
     async getAll(): Promise<Product[]> {
-        const products: Product[] = await productModel.find().lean();
+        const products: Product[] = await productModel.find().populate("categoryRef").lean();
         return products;
     }
     async getById(id: string): Promise<Product | null> {
-        const product: Product | null = await productModel.findOne({ uuid: id }).lean();
+        const product: Product | null = await productModel.findOne({ uuid: id }).populate("categoryRef").populate("tagsRef").lean();
         return product;
     }
     async create(product: Product): Promise<Product> {

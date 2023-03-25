@@ -6,9 +6,8 @@ interface User {
     password?: string;
     usedPasswords?: string[];
     phone?: string;
-    profilePicture?: string;
+    profilePicture?: any;
     birthdate?: string;
-    publicKey?: string;
     tokens?: string[];
     status?: string;
     createdAt?: Date;

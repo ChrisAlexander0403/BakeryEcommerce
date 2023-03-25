@@ -33,6 +33,9 @@ class UserLogin {
         if(foundUser && foundUser.password) {
             if (await this.passwordEncryptionRepo.comparePassword(password, foundUser.password)) {
                 const tokenData = {
+                    firstName: foundUser.firstName,
+                    lastName: foundUser.lastName,
+                    profilePicture: foundUser.profilePicture,
                     userName: foundUser.userName
                 }
 

@@ -31,7 +31,7 @@ class InventoryController {
     getAllInventories = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const inventories: Inventory[] = await this.getAllInventoriesUseCase.run();
-            res.status(200).json({ inventories });
+            res.status(200).json(inventories);
             return;
         } catch(err) {
             next(err);
@@ -42,7 +42,7 @@ class InventoryController {
         const { id } = req.params;
         try {
             const foundInventory: Inventory | null = await this.getInventoryByIdUseCase.run(id);
-            res.status(200).json({ foundInventory });
+            res.status(200).json(foundInventory);
             return;
         } catch (err) {
             next(err);
@@ -54,7 +54,7 @@ class InventoryController {
         try {
             inventory.uuid = uuid();
             const createdInventory = await this.createInventoryUseCase.run(inventory);
-            res.status(201).json({ createdInventory });
+            res.status(201).json(createdInventory);
             return;
         } catch(err) {
             next(err);
@@ -67,7 +67,7 @@ class InventoryController {
         
         try {
             const updatedInventory: Inventory = await this.updateInventoryUseCase.run(id, inventory);
-            res.status(200).json({ updatedInventory });
+            res.status(200).json(updatedInventory);
             return;
         } catch(err) {
             next(err);
@@ -78,7 +78,7 @@ class InventoryController {
         const { id } = req.params;
         try {
             const deletedInventory: Inventory = await this.deleteInventoryUseCase.run(id);
-            res.status(200).json({ deletedInventory });
+            res.status(200).json(deletedInventory);
             return;
         } catch(err) {
             next(err);

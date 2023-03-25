@@ -24,7 +24,7 @@ class FilesManagerRepo implements IFilesManagerRepo {
         return filePath;
     }
 
-    createFile(filePath: string, content: string, options: any): string {
+    createFile(filePath: string, content: string, options?: any): string {
         fs.writeFileSync(path.resolve(__dirname, this.adaptPath(filePath)), content, options?.encoding);
         return filePath;
     }

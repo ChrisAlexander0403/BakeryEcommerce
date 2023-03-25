@@ -31,7 +31,7 @@ class IngredientController {
     getAllIngredients = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const ingredients: Ingredient[] = await this.getAllIngredientsUseCase.run();
-            res.status(200).json({ ingredients });
+            res.status(200).json(ingredients);
             return;
         } catch(err) {
             next(err);
@@ -42,7 +42,7 @@ class IngredientController {
         const { id } = req.params;
         try {
             const foundIngredient: Ingredient | null = await this.getIngredientByIdUseCase.run(id);
-            res.status(200).json({ foundIngredient });
+            res.status(200).json(foundIngredient);
             return;
         } catch (err) {
             next(err);
@@ -54,7 +54,7 @@ class IngredientController {
         try {
             ingredient.uuid = uuid();
             const createdIngredient = await this.createIngredientUseCase.run(ingredient);
-            res.status(201).json({ createdIngredient });
+            res.status(201).json(createdIngredient);
             return;
         } catch(err) {
             next(err);
@@ -67,7 +67,7 @@ class IngredientController {
         
         try {
             const updatedIngredient: Ingredient = await this.updateIngredientUseCase.run(id, ingredient);
-            res.status(200).json({ updatedIngredient });
+            res.status(200).json(updatedIngredient);
             return;
         } catch(err) {
             next(err);
@@ -78,7 +78,7 @@ class IngredientController {
         const { id } = req.params;
         try {
             const deletedIngredient: Ingredient = await this.deleteIngredientUseCase.run(id);
-            res.status(200).json({ deletedIngredient });
+            res.status(200).json(deletedIngredient);
             return;
         } catch(err) {
             next(err);
